@@ -15,3 +15,6 @@ def install_docker():
         raise logging.exception(result.stderr)
     
     return result.stdout
+
+# Adding Execution
+install_docker()
