@@ -10,8 +10,9 @@ pipx
 #Environment variable to use pipx installed python3
 ENV PATH="/root/.local/bin:${PATH}"
 
-#Install ansible using pip
-RUN pipx install ansible
+#Updating pipx's internal shared pip and force install of ansible with dependencies
+RUN pipx ensurepath && \
+pipx install --include-deps ansible
 
 #Default command shell
 CMD ["/bin/bash"]
