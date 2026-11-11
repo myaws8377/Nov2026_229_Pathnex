@@ -20,8 +20,8 @@ systemctl start nginx
 
 WORKDIR /nginxapp
 
-#Expose port 8080 to 80 for nginx
-EXPOSE 8080:80
+#Expose port 80 for nginx
+EXPOSE 80
 
 #Default command shell
 CMD ["/bin/bash"]
