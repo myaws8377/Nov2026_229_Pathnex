@@ -23,7 +23,7 @@ WORKDIR /nginxapp
 EXPOSE 80
 
 #Default command shell
-CMD ["/bin/bash"]
+ENTRYPOINT ["/bin/bash"]
 
-#Adding Entry point to run nginx in foreground
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+#Run nginx in foreground
+CMD ["nginx", "-g", "daemon off;"]
