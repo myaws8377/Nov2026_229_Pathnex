@@ -15,8 +15,7 @@ RUN pipx ensurepath && \
 pipx install --include-deps ansible
 
 #Install nginx and start the service
-RUN apt install -y nginx && \
-systemctl start nginx
+RUN apt install -y nginx
 
 WORKDIR /nginxapp
 
@@ -24,4 +23,4 @@ WORKDIR /nginxapp
 EXPOSE 80
 
 #Default command shell
-CMD ["/bin/bash"]
+CMD ["nginx", "-g", "daemon off;"]
