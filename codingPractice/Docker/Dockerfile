@@ -22,8 +22,5 @@ WORKDIR /nginxapp
 #Expose port 80 for nginx
 EXPOSE 80
 
-#Default command shell
-ENTRYPOINT ["/bin/bash"]
-
 #Run nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
