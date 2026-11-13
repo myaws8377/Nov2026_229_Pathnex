@@ -47,7 +47,7 @@ def main() -> None:
 
 
 #Create as Module when required
-if __name__=="__main__":
+if __name__ == "__main__":
     logging.basicConfig(level=logging.debug)
 
     # Adding Main Execution
