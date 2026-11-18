@@ -180,8 +180,8 @@ data "aws_iam_policy_document" "custom" {
     content {
       sid = statement.value.sid
       effect = "allow"
-      actions = [statement.value.Actions]
-      resources = [statement.value.Resources]
+      actions = statement.value.Actions
+      resources = statement.value.Resources
     }
   }
 }
