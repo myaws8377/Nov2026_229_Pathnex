@@ -1,5 +1,11 @@
 .vs/
 .git/
- .venv
- __pycache__
- .env
+.venv
+__pycache__
+.env
+terraform.tfstate*
+.terraform*
+.terraform.lock.hcl
+.idea/
+Pathnex/pathnex-eks-tf/.terraform.lock.hcl
+Pathnex/pathnex-eks-tf/.terraform/

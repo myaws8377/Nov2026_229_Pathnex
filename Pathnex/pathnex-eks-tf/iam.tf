@@ -134,3 +134,70 @@ resource "aws_eks_pod_identity_association" "cluster_autoscaler" {
     aws_iam_role_policy_attachment.cluster_autoscaler
   ]
 }
+
+#Create IAM Cluster ROLE for EKS
+resource "aws_iam_role" "eks_cluster" {
+  name = "${var.cluster_name}_dev_eks_cluster"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Action = "sts:AssumeRole"
+      Effect = "Allow"
+      Sid = ""
+      Principal = {
+        Service = "eks.amazonaws.com"
+      }
+    },
+    ]
+  })
+}
+
+#Attach the above policy
+resource "aws_iam_policy_attachment" "eks_cluster_policy" {
+  name = "${var.cluster_name}_dev_eks_cluster_policy"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+  roles = [aws_iam_role.eks_cluster.name]
+}
+
+#Create Custom EKS policy for Terraform apply and destroy
+/* resource "aws_iam_policy" "Terraform-Custom-EKS-Manage-Policy" {
+  name = "Terraform-Custom-EKS-Manage-Policy"
+  description = "This Custom Policy creates access for Terraform to create and delete resources"
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action
+      }]
+  })
+} */
+
+# Custom IAM POLICY Document for EKS
+data "aws_iam_policy_document" "custom" {
+  for_each = local.policies
+  dynamic "statement" {
+    for_each = each.value.statements
+    content {
+      sid = statement.value.sid
+      effect = "allow"
+      actions = [statement.value.Actions]
+      resources = [statement.value.Resources]
+    }
+  }
+}
+
+
+# Custom IAM POLICY for EKS
+resource "aws_iam_policy" "custom" {
+  for_each = local.policies
+  name = each.key
+  description = each.value.description
+  policy = data.aws_iam_policy_document.custom[each.key].json
+}
+
+# Custom IAM POLICY Attachment for EKS
+resource "aws_iam_role_policy_attachment" "manage_EKS_Cluster_policy" {
+  #name = "manage_EKS_Cluster_policy_document"
+  role = aws_iam_role.ebs_csi.name
+  policy_arn = aws_iam_policy.custom["AmzEKSClusPol"].arn
+}

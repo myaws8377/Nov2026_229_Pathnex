@@ -1,0 +1,17 @@
+iam_policy:
+  read:
+    - "iam:GetPolicy"
+    - "iam:GetPolicyVersion"
+    - "iam:ListPolicyVersions"
+    - "iam:ListEntitiesForPolicy"
+  create:
+    - "iam:CreatePolicy"
+    - "iam:CreatePolicyVersion"
+    - "iam:SetDefaultPolicyVersion"
+  tag:
+    - "iam:TagPolicy"
+    - "iam:UntagPolicy"
+  delete:
+    - "iam:DeletePolicy"
+    - "iam:DeletePolicyVersion"
+    - "iam:DeleteRole"

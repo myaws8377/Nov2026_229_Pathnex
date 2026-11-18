@@ -1,4 +1,4 @@
-resource "helm_release" "cluster_autoscaler" {
+resource "helm_release" "cluster-autoscaler" {
   name       = "cluster-autoscaler"
   namespace  = "kube-system"
 
