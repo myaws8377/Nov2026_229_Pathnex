@@ -1,4 +1,4 @@
-iam_policy:
+#iam_policies for setting up EKS Cluster
   read:
     - "iam:GetPolicy"
     - "iam:GetPolicyVersion"
