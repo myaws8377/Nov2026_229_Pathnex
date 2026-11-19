@@ -24,7 +24,7 @@ resource "aws_eks_node_group" "pathnex-NG" {
 
   tags = {
   "k8s.io/cluster-autoscaler/enabled"          = "true"
-  "k8s.io/cluster-autoscaler/Pathnex-Sep-2026" = "owned"
+  "k8s.io/cluster-autoscaler/${local.cluster_name}" = "owned"
   }
   
   lifecycle {

@@ -106,7 +106,7 @@ resource "aws_iam_policy" "cluster_autoscaler" {
           StringEquals = {
             "aws:ResourceTag/k8s.io/cluster-autoscaler/enabled" = "true"
 
-            "aws:ResourceTag/k8s.io/cluster-autoscaler/Pathnex-Sep-2026" = "owned"
+            "aws:ResourceTag/k8s.io/cluster-autoscaler/${local.cluster_name}" = "owned"
           }
         }
       }
@@ -137,7 +137,7 @@ resource "aws_eks_pod_identity_association" "cluster_autoscaler" {
 
 #Create IAM Cluster ROLE for EKS
 resource "aws_iam_role" "eks_cluster" {
-  name = "${var.cluster_name}_dev_eks_cluster"
+  name = "${local.cluster_name}_dev_eks_cluster"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
@@ -154,7 +154,7 @@ resource "aws_iam_role" "eks_cluster" {
 
 #Attach the above policy
 resource "aws_iam_policy_attachment" "eks_cluster_policy" {
-  name = "${var.cluster_name}_dev_eks_cluster_policy"
+  name = "${local.cluster_name}_dev_eks_cluster_policy"
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   roles = [aws_iam_role.eks_cluster.name]
 }
@@ -179,7 +179,7 @@ data "aws_iam_policy_document" "custom" {
     for_each = each.value.statements
     content {
       sid = statement.value.sid
-      effect = "allow"
+      effect = "Allow"
       actions = statement.value.Actions
       resources = statement.value.Resources
     }
