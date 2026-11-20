@@ -24,10 +24,10 @@ get_os_architecture() {
     case "$ARCHITECTURE" in
         x86_64) echo "Architecture is x86_64" ;;
         aarch64) echo "Architecture is aarch64" ;;
-        *) echo "Unsupported architecture: $ARCHITECTURE" >& 2;;
-        exit 1
+        *) echo "Unsupported architecture: $ARCHITECTURE" >& 2
+        return 1
         ;;
-        esac
+    esac
 }
 
 install_kubectl() {
@@ -43,21 +43,22 @@ install_kubectl() {
     rm -rf "${tmp_dir}"
 }
 
-install awscli() {
+install_awscli() {
     local RAW_ARCHITECTURE
     RAW_ARCHITECTURE=$(get_os_architecture)
     echo "Downloading AWS CLI v2..."
     #Need curl and unzip first
     if ! command -v curl &> /dev/null || ! command -v unzip &> /dev/null; then
-        run apt_update
+        apt_update
         sudo apt-get install -y curl unzip
     fi
+
     local temp_dir
     temp_dir=$(mktemp -d)
-    curl -fsSL "https://amazonaws.com{raw_arch}.zip" -o "${tmp_dir}/awscliv2.zip"
-    unzip -q "${tmp_dir}/awscliv2.zip" -d "${tmp_dir}"
-    sudo "${tmp_dir}/aws/install" --update
-    rm -rf "${tmp_dir}"
+    curl -fsSL "https://amazonaws.com{RAW_ARCHITECTURE}.zip" -o "${temp_dir}/awscliv2.zip"
+    unzip -q "${temp_dir}/awscliv2.zip" -d "${temp_dir}"
+    sudo "${temp_dir}/aws/install" --update
+    rm -rf "${temp_dir}"
 }
 
 check_package() {
