@@ -1,10 +1,10 @@
 resource "aws_instance" "pathnex" {
   for_each = local.instances
 
-  ami                         = data.aws_ami.amazon_linux.id
-  instance_type               = var.instance_type
+  ami = data.aws_ami.amazon_linux.id
+  instance_type = coalesce(try(each.value.instance_type, null), var.instance_type)
   associate_public_ip_address = true
-  key_name                    = var.key_name
+  key_name = var.key_name
 
   subnet_id = data.aws_subnets.default.ids[0]
 

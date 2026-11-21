@@ -1,5 +1,5 @@
 variable "region" {
-  default = "ap-south-1"
+  default = "ap-south-2"
 }
 
 variable "instance_type" {
@@ -7,5 +7,5 @@ variable "instance_type" {
 }
 
 variable "key_name" {
-  default = "Pathnex-ec2-key"
+  default = "Pathnex.pem"
 }
