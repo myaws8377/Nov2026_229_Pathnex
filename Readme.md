@@ -1,8 +1,23 @@
-Youtube video link
+For best practice
 
-https://youtube.com/live/kjeobjJkrgc
+Step 1 - Create S3 Profile for backend
+Step 2 - Create Infrastrue Profile for rest of the work like to create EC2
+Step 3 - Update ~/.aws/config with these two profiles.
 
+Sample
+[default]
+region = regions-name
 
-Step 1 - Create Ec2 using Terraform
-Step 2 - Using ansible command given in hosts.ini file to run Playbook
+[profile Any Name]
+role_arn = arn:aws:iam::123456789:role/S3BucketCreatorRole-Custom
+source_profile = default
+region = ap-south-2
 
+[profile AnyName]
+role_arn = arn:aws:iam::123456789:role/TerraformInfrastructureRole
+source_profile = default
+region = ap-south-2
+
+Step 4 - Add profile in Terraform for S3 and Provider
+
+Step 5 - Create IAM Custom TerraformInfrastructureRole and attach TerraformInfrastructurePolicy-Custom Policy

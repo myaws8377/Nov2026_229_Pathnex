@@ -28,3 +28,7 @@ data "aws_ami" "amazon_linux" {
     values = ["amzn2-ami-hvm-*-x86_64-gp2"]
   }
 }
+
+data "aws_key_pair" "ec2-ssh" {
+  key_name = "ec2-ssh"
+}
