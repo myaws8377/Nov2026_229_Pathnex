@@ -3,6 +3,7 @@ terraform {
     bucket = "sathyamurali"
     key    = "batch/oct/ansible/terraform.tfstate"
     region = "ap-south-2"
+    profile = "s3-creator"
     #   dynamodb_table = "terraform-locks" # optional but recommended
     use_lockfile = true
     encrypt      = true
