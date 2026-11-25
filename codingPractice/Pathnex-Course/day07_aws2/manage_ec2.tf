@@ -1,13 +1,5 @@
-data "aws_ami" "ubuntu" {
-    most_recent = true
-    owners = ["099720109477"]
-    filter {
-        name = "name"
-        values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-    }
-}
-
 resource "aws_instance" "pathnexpractice" {
     ami = data.aws_ami.ubuntu.id
     instance_type = var.default_instance_type
+    subnet_id = data.aws_vpc.default.id
 }
