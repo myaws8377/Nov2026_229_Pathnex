@@ -1,0 +1,1 @@
+default_region = "ap-south-2"
