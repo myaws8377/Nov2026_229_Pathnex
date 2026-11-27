@@ -1,0 +1,27 @@
+services:
+  app:
+    image: node:22-alpine
+    container_name: nectar-nodejs
+    working_dir: /app
+    volumes:
+      - ./src:/app
+    command: sh -c "npm install && npm start"
+    ports:
+      - "3000:3000"
+      environment:
+        MONGO_URI: mongodb://mongo:27017/nectar
+        depends_on:
+          - mongo
+        restart: always
+
+    mongo:
+        image: mongo:8
+        container_name: nectar-mongo
+        ports:
+          - "27017:27017"
+        volumes:
+          - mongo-data:/data/db
+        restart: always
+
+    volumes:
+      mongo-data:
