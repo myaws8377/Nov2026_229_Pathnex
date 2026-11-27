@@ -14,5 +14,13 @@ ENV PATH="/root/.local/bin:${PATH}"
 RUN pipx ensurepath && \
 pipx install --include-deps ansible
 
-#Default command shell
-CMD ["/bin/bash"]
+#Install nginx and start the service
+RUN apt install -y nginx
+
+WORKDIR /nginxapp
+
+#Expose port 80 for nginx
+EXPOSE 80
+
+#Run nginx in foreground
+CMD ["nginx", "-g", "daemon off;"]
