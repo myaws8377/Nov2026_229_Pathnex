@@ -1,0 +1,39 @@
+---
+- hosts: servers
+  become: yes
+  gather_facts: true
+
+  tasks:
+
+    - name: Install Apache
+      ansible.builtin.command:
+        cmd: yum install -y httpd
+
+    - name: Configure Apache to use port 8080
+      ansible.builtin.command:
+        cmd: sed -i 's/^Listen 80/Listen 8080/' /etc/httpd/conf/httpd.conf
+
+    - name: Enable Nginx Extra repository
+      ansible.builtin.command:
+        cmd: amazon-linux-extras enable nginx1
+
+    - name: Install Nginx
+      ansible.builtin.command:
+        cmd: yum install -y nginx
+
+    - name: Restart Apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+        enabled: yes
+
+    - name: Test Nginx configuration
+      ansible.builtin.command:
+        cmd: nginx -t
+
+    - name: Start Nginx
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: yes
+
