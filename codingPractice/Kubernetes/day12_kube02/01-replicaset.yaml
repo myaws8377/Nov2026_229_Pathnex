@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+
+metadata:
+  name: hotcup-express-rs
+
+spec:
+  replicas: 3
+
+  selector:
+    matchLabels:
+      app: hotcup-express-rs
+
+  template:
+    metadata:
+      labels:
+        app: hotcup-express-rs
+
+    spec:
+      containers:
+        - name: hotcup-express
+          image: hotcup-express:1.0
+          imagePullPolicy: IfNotPresent
+
+          ports:
+            - containerPort: 3000
+
+          resources:
+            requests:
+             memory: "128Mi"
+             cpu: "100m"
+
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
