@@ -14,7 +14,9 @@ spec:
     spec:
       containers:
       - name: hotcup-express
-        image: node:24-bookworm-slim
+        image: hotcup-express:1.0
+        imagePullPolicy: IfNotPresent
+
         ports:
         - containerPort: 3000
         resources:

@@ -11,4 +11,4 @@ COPY . .
 #Expose application port
 EXPOSE 3000
 #Start Express application
-CMD ["node", "server.js"]
+CMD ["node", "app.js"]
